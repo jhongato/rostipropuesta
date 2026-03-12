@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Propuesta IA - La Rostisería</title>
+    <meta name="description" content="Automatización Inteligente para La Rostisería">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'system-ui', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            gold: '#D97706',
+                            goldLight: '#F59E0B',
+                            dark: '#0A0A0A',
+                            darker: '#000000',
+                            card: '#141414',
+                            accent: '#3B82F6'
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'glow': 'glow 3s ease-in-out infinite alternate',
+                        'slide-up': 'slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        glow: {
+                            '0%': { opacity: 0.5, transform: 'scale(1)' },
+                            '100%': { opacity: 1, transform: 'scale(1.05)' },
+                        },
+                        slideUp: {
+                            '0%': { opacity: 0, transform: 'translateY(40px)' },
+                            '100%': { opacity: 1, transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            background-color: theme('colors.brand.darker');
+            color: #FAFAFA;
+        }
+
+        .glass-panel {
+            background: rgba(20, 20, 20, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .text-gradient-gold {
+            background: linear-gradient(to right, #F59E0B, #D97706);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .text-gradient-blue {
+            background: linear-gradient(to right, #60A5FA, #3B82F6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .gradient-bg {
+            background: radial-gradient(circle at top right, rgba(217, 119, 6, 0.15), transparent 40%),
+                        radial-gradient(circle at bottom left, rgba(59, 130, 246, 0.1), transparent 40%);
+        }
+
+        .hover-card {
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .hover-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
+            border-color: rgba(217, 119, 6, 0.3);
+        }
+
+        .premium-border {
+            position: relative;
+        }
+        
+        .premium-border::before {
+            content: "";
+            position: absolute;
+            inset: -2px;
+            border-radius: inherit;
+            background: linear-gradient(to bottom right, rgba(217, 119, 6, 0.5), rgba(59, 130, 246, 0.5));
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .premium-border:hover::before {
+            opacity: 1;
+        }
+
+        .stagger-1 { animation-delay: 0.1s; opacity: 0; }
+        .stagger-2 { animation-delay: 0.2s; opacity: 0; }
+        .stagger-3 { animation-delay: 0.3s; opacity: 0; }
+        .stagger-4 { animation-delay: 0.4s; opacity: 0; }
+        
+        /* Smooth Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0A0A0A; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #D97706; 
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-brand-gold selection:text-white overflow-x-hidden">
+
+    <!-- Background Elements -->
+    <div class="fixed inset-0 gradient-bg -z-10"></div>
+    <div class="fixed top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-brand-gold/50 to-transparent"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-panel border-b-0 border-b border-white/5 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-gold to-brand-goldLight flex items-center justify-center shadow-lg shadow-brand-gold/20">
+                    <i class="fas fa-robot text-white text-xl"></i>
+                </div>
+                <span class="text-xl font-bold tracking-tight text-white">IA Proposal</span>
+            </div>
+            <div class="hidden md:flex gap-8 text-sm font-medium">
+                <a href="#estado-actual" class="text-gray-400 hover:text-white transition-colors">Estado Actual</a>
+                <a href="#planes" class="text-gray-400 hover:text-white transition-colors">Planes de Inversión</a>
+            </div>
+            <a href="https://wa.me/573006252327" target="_blank" class="px-6 py-2.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-sm font-semibold transition-all hover:border-brand-gold/50 flex items-center gap-2">
+                <i class="fab fa-whatsapp text-brand-gold"></i>
+                <span>Contactar</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-40 pb-20 lg:pt-48 lg:pb-32 px-6">
+        <div class="max-w-5xl mx-auto text-center relative z-10">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-panel border border-brand-gold/20 text-brand-gold text-sm font-medium mb-8 animate-slide-up stagger-1">
+                <span class="relative flex h-2 w-2">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-gold opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-gold"></span>
+                </span>
+                Propuesta Exclusiva
+            </div>
+            
+            <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-8 leading-tight animate-slide-up stagger-2">
+                Automatización Inteligente
+                <span class="block text-gradient-gold mt-2">La Rostisería</span>
+            </h1>
+            
+            <p class="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-12 animate-slide-up stagger-3 font-light leading-relaxed">
+                Transforma tu WhatsApp en un centro de operaciones que vende, atiende y gestiona reservas de forma autónoma las 24 horas del día.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center animate-slide-up stagger-4">
+                <a href="#planes" class="px-8 py-4 rounded-full bg-gradient-to-r from-brand-gold to-brand-goldLight text-white font-bold text-lg shadow-lg shadow-brand-gold/25 hover:shadow-brand-gold/40 hover:-translate-y-1 transition-all flex items-center justify-center gap-3">
+                    Ver Opciones de Inversión
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- Decorative UI Element -->
+        <div class="mt-20 max-w-4xl mx-auto relative animate-float opacity-80">
+            <div class="absolute inset-0 bg-gradient-to-t from-brand-darker via-transparent lg:hidden z-10"></div>
+            <div class="glass-panel p-2 rounded-2xl border border-white/10 shadow-2xl relative overflow-hidden">
+                <div class="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-brand-gold/30 to-transparent"></div>
+                <div class="bg-[#0A0A0A] rounded-xl overflow-hidden border border-white/5 flex items-stretch h-64 md:h-80">
+                    <!-- Fake Sidebar -->
+                    <div class="w-16 md:w-64 border-r border-white/5 bg-[#111] p-4 flex flex-col gap-4 hidden sm:flex">
+                        <div class="h-8 w-8 rounded bg-brand-gold/20 flex-shrink-0 mb-4"></div>
+                        <div class="h-4 w-full bg-white/5 rounded"></div>
+                        <div class="h-4 w-3/4 bg-white/5 rounded"></div>
+                        <div class="h-4 w-5/6 bg-white/5 rounded"></div>
+                    </div>
+                    <!-- Fake Chat/Dashboard -->
+                    <div class="flex-1 p-6 flex flex-col gap-6 relative">
+                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-brand-accent/5 rounded-full blur-3xl"></div>
+                        
+                        <div class="flex justify-between items-center z-10">
+                            <div class="h-6 w-32 bg-white/10 rounded"></div>
+                            <div class="h-6 w-16 bg-green-500/20 rounded"></div>
+                        </div>
+                        
+                        <div class="grid grid-cols-3 gap-4 z-10">
+                            <div class="h-24 bg-white/5 rounded-xl border border-white/5 p-4 flex flex-col justify-end">
+                                <div class="h-3 w-1/2 bg-white/10 rounded mb-2"></div>
+                                <div class="h-6 w-3/4 bg-brand-gold/40 rounded"></div>
+                            </div>
+                            <div class="h-24 bg-white/5 rounded-xl border border-white/5 p-4 flex flex-col justify-end">
+                                <div class="h-3 w-1/2 bg-white/10 rounded mb-2"></div>
+                                <div class="h-6 w-3/4 bg-brand-accent/40 rounded"></div>
+                            </div>
+                            <div class="h-24 bg-white/5 rounded-xl border border-white/5 p-4 flex flex-col justify-end">
+                                <div class="h-3 w-1/2 bg-white/10 rounded mb-2"></div>
+                                <div class="h-6 w-1/2 bg-green-500/40 rounded"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Estado Actual -->
+    <section id="estado-actual" class="py-24 relative z-10">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="mb-16 md:w-2/3">
+                <h2 class="text-sm font-bold tracking-widest text-gray-500 uppercase mb-3">Fase 1</h2>
+                <h3 class="text-3xl md:text-5xl font-bold mb-6">Estado Actual: El Prototipo</h3>
+                <p class="text-xl text-gray-400 font-light">
+                    Un vistazo a la capacidad actual de tu agente antes de escalar.
+                </p>
+            </div>
+            
+            <div class="glass-panel hover-card rounded-3xl p-8 md:p-12 border border-white/10 premium-border relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-brand-gold/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+                
+                <div class="flex flex-col md:flex-row gap-12 items-center">
+                    <div class="flex-1 space-y-6">
+                        <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-white/5 border border-white/10 mb-2">
+                            <i class="fas fa-user-tie text-2xl text-white"></i>
+                        </div>
+                        <h4 class="text-2xl font-bold">Especialista en Ventas</h4>
+                        <p class="text-gray-400 text-lg leading-relaxed">
+                            Actualmente, el sistema cuenta con un agente enfocado <strong class="text-white font-medium">únicamente</strong> en resolver dudas sobre la carta (platos, ingredientes, precios).
+                        </p>
+                        <div class="bg-brand-gold/10 border border-brand-gold/20 rounded-xl p-6 relative">
+                            <div class="absolute left-0 top-0 bottom-0 w-1 bg-brand-gold rounded-l-xl"></div>
+                            <p class="text-brand-gold font-medium italic">
+                                "Su objetivo es generar deseo de compra para redirigir exitosamente al cliente al menú digital."
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Chat visual representation -->
+                    <div class="w-full md:w-80 space-y-4">
+                        <div class="bg-[#202020] rounded-2xl rounded-tr-sm p-4 text-sm shadow-lg w-5/6 ml-auto">
+                            ¿Qué ingredientes trae el Rosti Prime?
+                        </div>
+                        <div class="bg-brand-accent/10 border border-brand-accent/20 rounded-2xl rounded-tl-sm p-4 text-sm shadow-lg w-11/12 text-blue-100">
+                            El Rosti Prime es nuestra especialidad de la casa. Viene con una base crujiente de papa, quesos seleccionados y tocino premium. ¿Te gustaría ver el menú completo para ordenarlo?
+                        </div>
+                        <div class="bg-[#202020] rounded-2xl rounded-tr-sm p-4 text-sm shadow-lg w-3/4 ml-auto">
+                            Sí, pásame el link.
+                        </div>
+                        <div class="bg-brand-accent/10 border border-brand-accent/20 rounded-2xl rounded-tl-sm p-4 text-sm shadow-lg w-10/12 text-blue-100">
+                            ¡Claro! Haz tu pedido aquí: <span class="text-brand-accent underline">menu.larostiseria.com</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Planes de Inversión -->
+    <section id="planes" class="py-24 relative z-10 bg-black/50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-20">
+                <h2 class="text-sm font-bold tracking-widest text-brand-gold uppercase mb-3">Escalabilidad</h2>
+                <h3 class="text-4xl md:text-5xl font-bold mb-6">Opciones de Evolución</h3>
+                <p class="text-xl text-gray-400 max-w-2xl mx-auto font-light">
+                    Transforma tu operativo manual en un ecosistema digital autónomo.
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
+                <!-- Option 1: Esencial -->
+                <div class="glass-panel hover-card rounded-3xl p-8 border border-white/10 flex flex-col relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black/80 -z-10"></div>
+                    
+                    <div class="mb-8">
+                        <span class="px-4 py-1.5 rounded-full bg-white/10 text-white text-xs font-bold tracking-wider uppercase mb-6 inline-block">Opción 1</span>
+                        <h4 class="text-3xl font-bold mb-4">Plan Esencial</h4>
+                        <p class="text-gray-400">Optimización del Prototipo. Ideal para digitalizar la atención básica sin complicaciones.</p>
+                    </div>
+
+                    <div class="flex-1 space-y-8">
+                        <div>
+                            <h5 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-4 border-b border-white/5 pb-2">Alcance</h5>
+                            <ul class="space-y-4">
+                                <li class="flex items-start gap-3 text-gray-300">
+                                    <i class="fas fa-check mt-1 text-white"></i>
+                                    <span><strong>1 Agente Especializado:</strong> Atención 24/7 sobre el menú y restaurante.</span>
+                                </li>
+                                <li class="flex items-start gap-3 text-gray-300">
+                                    <i class="fas fa-check mt-1 text-white"></i>
+                                    <span><strong>Redirección Estratégica:</strong> Link directo a domicilios tras cada consulta exitosa.</span>
+                                </li>
+                                <li class="flex items-start gap-3 text-gray-300">
+                                    <i class="fas fa-check mt-1 text-white"></i>
+                                    <span><strong>Canal:</strong> WhatsApp (1 línea).</span>
+                                </li>
+                                <li class="flex items-start gap-3 text-gray-300">
+                                    <i class="fas fa-check mt-1 text-white"></i>
+                                    <span><strong>Métricas Básicas:</strong> Reporte mensual simple de interacciones.</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="bg-red-500/10 border border-red-500/20 rounded-xl p-5">
+                            <h5 class="text-red-400 text-sm font-bold mb-2 flex items-center gap-2">
+                                <i class="fas fa-exclamation-circle"></i> Limitaciones
+                            </h5>
+                            <p class="text-sm text-gray-400">No gestiona reservas ni realiza seguimiento de post-venta.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Option 2: Ecosistema -->
+                <div class="glass-panel hover-card premium-border rounded-3xl p-8 md:p-10 border border-brand-gold/30 flex flex-col relative overflow-hidden transform lg:-translate-y-4 shadow-2xl">
+                    <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-brand-gold to-brand-accent"></div>
+                    <div class="absolute top-0 right-0 w-96 h-96 bg-brand-gold/10 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+                    
+                    <div class="mb-8 relative z-10">
+                        <div class="flex justify-between items-start">
+                            <span class="px-4 py-1.5 rounded-full bg-gradient-to-r from-brand-gold to-brand-goldLight text-white text-xs font-bold tracking-wider uppercase mb-6 inline-block shadow-lg shadow-brand-gold/30">Opción 2 • Máximo Valor</span>
+                            <i class="fas fa-star text-brand-gold text-xl"></i>
+                        </div>
+                        <h4 class="text-3xl lg:text-4xl font-bold mb-4">Ecosistema Multi-Agente</h4>
+                        <p class="text-gray-300 text-lg">Transforma el WhatsApp en un centro de operaciones inteligente que vende y gestiona por ti.</p>
+                    </div>
+
+                    <div class="flex-1 space-y-8 relative z-10">
+                        <div>
+                            <h5 class="text-sm font-bold text-brand-gold uppercase tracking-wider mb-4 border-b border-white/10 pb-2 flex items-center gap-2">
+                                <i class="fas fa-network-wired"></i> Alcance Multi-Agente
+                            </h5>
+                            <ul class="space-y-4">
+                                <li class="flex items-start gap-3 text-gray-200">
+                                    <div class="mt-1 w-5 h-5 rounded-full bg-brand-gold/20 flex items-center justify-center flex-shrink-0 border border-brand-gold/30">
+                                        <i class="fas fa-shopping-cart text-xs text-brand-gold"></i>
+                                    </div>
+                                    <span><strong>Ventas + Upselling:</strong> No solo responde, sugiere agrandar el combo o probar el plato más rentable.</span>
+                                </li>
+                                <li class="flex items-start gap-3 text-gray-200">
+                                    <div class="mt-1 w-5 h-5 rounded-full bg-brand-gold/20 flex items-center justify-center flex-shrink-0 border border-brand-gold/30">
+                                        <i class="fas fa-glass-martini-alt text-xs text-brand-gold"></i>
+                                    </div>
+                                    <span><strong>Cross-Selling:</strong> Sugiere la bebida o cóctel que mejor maride.</span>
+                                </li>
+                                <li class="flex items-start gap-3 text-gray-200">
+                                    <div class="mt-1 w-5 h-5 rounded-full bg-brand-gold/20 flex items-center justify-center flex-shrink-0 border border-brand-gold/30">
+                                        <i class="fas fa-calendar-alt text-xs text-brand-gold"></i>
+                                    </div>
+                                    <span><strong>Reservas:</strong> Integración con calendario para asegurar mesas sin intervención.</span>
+                                </li>
+                                <li class="flex items-start gap-3 text-gray-200">
+                                    <div class="mt-1 w-5 h-5 rounded-full bg-brand-gold/20 flex items-center justify-center flex-shrink-0 border border-brand-gold/30">
+                                        <i class="fas fa-headset text-xs text-brand-gold"></i>
+                                    </div>
+                                    <span><strong>Servicio (PQR):</strong> Clasifica quejas/sugerencias y las escala al dueño.</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h5 class="text-sm font-bold text-brand-accent uppercase tracking-wider mb-4 border-b border-white/10 pb-2 flex items-center gap-2">
+                                <i class="fas fa-database text-brand-accent"></i> Tecnología & Datos
+                            </h5>
+                            <ul class="space-y-3">
+                                <li class="flex items-start gap-3 text-gray-300 text-sm">
+                                    <i class="fas fa-chart-pie mt-1 text-brand-accent"></i>
+                                    <span><strong>Dashboard:</strong> Panel visual con horas pico, platos más consultados y clics.</span>
+                                </li>
+                                <li class="flex items-start gap-3 text-gray-300 text-sm">
+                                    <i class="fas fa-sync-alt mt-1 text-brand-accent"></i>
+                                    <span><strong>Conocimiento Dinámico:</strong> Actualización de precios y platos en tiempo real.</span>
+                                </li>
+                                <li class="flex items-start gap-3 text-gray-300 text-sm">
+                                    <i class="fas fa-mobile-alt mt-1 text-brand-accent"></i>
+                                    <span><strong>Canales:</strong> WhatsApp + Instagram DMs.</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-20 text-center">
+                <a href="https://wa.me/573006252327" target="_blank" class="inline-flex items-center gap-3 px-10 py-5 rounded-full bg-white text-black font-bold text-lg hover:scale-105 transition-transform hover:shadow-[0_0_40px_rgba(255,255,255,0.3)]">
+                    Discutir Implementación
+                    <i class="fab fa-whatsapp text-green-500 text-xl"></i>
+                </a>
+                <p class="text-sm text-gray-500 mt-6">La Rostisería merece tecnología de punta.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/5 py-12 relative z-10 glass-panel">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center">
+                    <i class="fas fa-robot text-brand-gold text-sm"></i>
+                </div>
+                <span class="font-bold text-white tracking-widest text-sm">IA PROPOSAL</span>
+            </div>
+            <p class="text-gray-500 text-sm">
+                Diseñado exclusivamente para <span class="text-white font-medium">La Rostisería</span>.
+            </p>
+        </div>
+    </footer>
+
+</body>
+</html>
