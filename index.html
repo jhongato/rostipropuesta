@@ -195,43 +195,152 @@
             </div>
         </div>
 
-        <!-- Decorative UI Element -->
-        <div class="mt-20 max-w-4xl mx-auto relative animate-float opacity-80">
-            <div class="absolute inset-0 bg-gradient-to-t from-brand-darker via-transparent lg:hidden z-10"></div>
-            <div class="glass-panel p-2 rounded-2xl border border-white/10 shadow-2xl relative overflow-hidden">
+        <!-- Decorative UI Element (n8n/Flow Mockup) -->
+        <div class="mt-20 max-w-5xl mx-auto relative animate-float opacity-90 overflow-hidden hidden md:block">
+            <!-- Glow background -->
+            <div class="absolute inset-0 bg-gradient-to-t from-brand-darker via-transparent z-20 pointer-events-none"></div>
+            
+            <div class="glass-panel p-4 rounded-2xl border border-white/10 shadow-2xl relative">
                 <div class="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-brand-gold/30 to-transparent"></div>
-                <div class="bg-[#0A0A0A] rounded-xl overflow-hidden border border-white/5 flex items-stretch h-64 md:h-80">
-                    <!-- Fake Sidebar -->
-                    <div class="w-16 md:w-64 border-r border-white/5 bg-[#111] p-4 flex flex-col gap-4 hidden sm:flex">
-                        <div class="h-8 w-8 rounded bg-brand-gold/20 flex-shrink-0 mb-4"></div>
-                        <div class="h-4 w-full bg-white/5 rounded"></div>
-                        <div class="h-4 w-3/4 bg-white/5 rounded"></div>
-                        <div class="h-4 w-5/6 bg-white/5 rounded"></div>
-                    </div>
-                    <!-- Fake Chat/Dashboard -->
-                    <div class="flex-1 p-6 flex flex-col gap-6 relative">
-                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-brand-accent/5 rounded-full blur-3xl"></div>
+                
+                <!-- Canvas Area -->
+                <div class="bg-[#0b0b0b] rounded-xl border border-white/5 relative h-[380px] overflow-hidden" 
+                     style="background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px); background-size: 24px 24px;">
+                    
+                    <!-- SVG Connection Lines -->
+                    <svg class="absolute inset-0 w-full h-full z-0" style="pointer-events: none;">
+                        <!-- line from Webhook to Router -->
+                        <path d="M 120 190 C 180 190, 200 190, 250 190" fill="none" stroke="rgba(217, 119, 6, 0.4)" stroke-width="2" stroke-dasharray="4" class="animate-[dash_3s_linear_infinite]" />
                         
-                        <div class="flex justify-between items-center z-10">
-                            <div class="h-6 w-32 bg-white/10 rounded"></div>
-                            <div class="h-6 w-16 bg-green-500/20 rounded"></div>
-                        </div>
+                        <!-- lines from Router to Agents -->
+                        <path d="M 450 190 C 500 190, 520 80, 580 80" fill="none" stroke="rgba(59, 130, 246, 0.4)" stroke-width="2" stroke-dasharray="4" class="animate-[dash_3s_linear_infinite]" />
+                        <path d="M 450 190 C 500 190, 520 190, 580 190" fill="none" stroke="rgba(217, 119, 6, 0.4)" stroke-width="2" stroke-dasharray="4" class="animate-[dash_3s_linear_infinite]" />
+                        <path d="M 450 190 C 500 190, 520 300, 580 300" fill="none" stroke="rgba(34, 197, 94, 0.4)" stroke-width="2" stroke-dasharray="4" class="animate-[dash_3s_linear_infinite]" />
                         
-                        <div class="grid grid-cols-3 gap-4 z-10">
-                            <div class="h-24 bg-white/5 rounded-xl border border-white/5 p-4 flex flex-col justify-end">
-                                <div class="h-3 w-1/2 bg-white/10 rounded mb-2"></div>
-                                <div class="h-6 w-3/4 bg-brand-gold/40 rounded"></div>
+                        <!-- line from Sales Agent to DB -->
+                        <path d="M 780 190 C 820 190, 830 190, 860 190" fill="none" stroke="rgba(217, 119, 6, 0.4)" stroke-width="2" stroke-dasharray="4" class="animate-[dash_3s_linear_infinite]" />
+                    </svg>
+                    
+                    <style>
+                        @keyframes dash {
+                            to { stroke-dashoffset: -20; }
+                        }
+                        .node-card {
+                            background: #1a1a1a;
+                            border: 1px solid rgba(255, 255, 255, 0.1);
+                            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+                            transition: transform 0.2s;
+                        }
+                        .node-card:hover {
+                            transform: translateY(-2px);
+                            border-color: rgba(255,255,255,0.2);
+                        }
+                        .connection-dot {
+                            width: 10px; height: 10px; border-radius: 50%;
+                            position: absolute; top: 50%; transform: translateY(-50%);
+                            border: 2px solid #1a1a1a;
+                        }
+                    </style>
+
+                    <!-- Top Right Label -->
+                    <div class="absolute top-4 right-4 bg-white/5 border border-white/10 rounded-full px-3 py-1 text-xs text-gray-400 z-30 flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                        Active Workflow
+                    </div>
+
+                    <!-- Nodes -->
+                    <!-- 1. Trigger Node -->
+                    <div class="absolute left-[30px] top-[150px] w-auto z-10">
+                        <div class="node-card rounded-xl p-3 flex items-center gap-3 relative min-w-[140px]">
+                            <div class="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center border border-green-500/20">
+                                <i class="fab fa-whatsapp text-green-500 text-lg"></i>
                             </div>
-                            <div class="h-24 bg-white/5 rounded-xl border border-white/5 p-4 flex flex-col justify-end">
-                                <div class="h-3 w-1/2 bg-white/10 rounded mb-2"></div>
-                                <div class="h-6 w-3/4 bg-brand-accent/40 rounded"></div>
+                            <div>
+                                <div class="text-xs font-bold text-white">WhatsApp</div>
+                                <div class="text-[10px] text-gray-500">Trigger</div>
                             </div>
-                            <div class="h-24 bg-white/5 rounded-xl border border-white/5 p-4 flex flex-col justify-end">
-                                <div class="h-3 w-1/2 bg-white/10 rounded mb-2"></div>
-                                <div class="h-6 w-1/2 bg-green-500/40 rounded"></div>
+                            <div class="connection-dot bg-green-500 -right-1.5"></div>
+                        </div>
+                    </div>
+
+                    <!-- 2. Router Node -->
+                    <div class="absolute left-[250px] top-[140px] z-10">
+                        <div class="node-card rounded-xl p-3 flex items-center gap-3 relative min-w-[200px] border-brand-gold/30">
+                            <div class="connection-dot bg-gray-400 -left-1.5"></div>
+                            <div class="w-10 h-10 rounded-lg bg-brand-gold/10 flex items-center justify-center border border-brand-gold/20">
+                                <i class="fas fa-network-wired text-brand-gold text-lg"></i>
+                            </div>
+                            <div>
+                                <div class="text-xs font-bold text-white">IA Intent Router</div>
+                                <div class="text-[10px] text-gray-400">GPT-4o Classifier</div>
+                            </div>
+                            <!-- Output dots -->
+                            <div class="absolute -right-1.5 top-1/4 w-2.5 h-2.5 rounded-full border-2 border-brand-gold bg-[#1a1a1a]"></div>
+                            <div class="absolute -right-1.5 top-2/4 w-2.5 h-2.5 rounded-full border-2 border-brand-gold bg-[#1a1a1a]"></div>
+                            <div class="absolute -right-1.5 top-3/4 w-2.5 h-2.5 rounded-full border-2 border-brand-gold bg-[#1a1a1a]"></div>
+                        </div>
+                    </div>
+
+                    <!-- 3. Agents Nodes (Column) -->
+                    <!-- Reservas -->
+                    <div class="absolute left-[580px] top-[40px] z-10">
+                        <div class="node-card rounded-xl p-3 flex items-center gap-3 relative min-w-[200px] border-brand-accent/20">
+                            <div class="connection-dot bg-brand-accent -left-1.5"></div>
+                            <div class="w-10 h-10 rounded-lg bg-brand-accent/10 flex items-center justify-center border border-brand-accent/20">
+                                <i class="fas fa-calendar-check text-brand-accent text-lg"></i>
+                            </div>
+                            <div>
+                                <div class="text-xs font-bold text-white">Agente Reservas</div>
+                                <div class="text-[10px] text-gray-400">Disponibilidad mesa</div>
                             </div>
                         </div>
                     </div>
+
+                    <!-- Ventas -->
+                    <div class="absolute left-[580px] top-[140px] z-10">
+                        <div class="node-card rounded-xl p-3 flex items-center justify-between gap-3 relative min-w-[200px] border-brand-gold/50 shadow-[0_0_15px_rgba(217,119,6,0.15)]">
+                            <div class="connection-dot bg-brand-gold -left-1.5"></div>
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-lg bg-brand-gold/20 flex items-center justify-center border border-brand-gold/30">
+                                    <i class="fas fa-shopping-bag text-brand-gold text-lg"></i>
+                                </div>
+                                <div>
+                                    <div class="text-xs font-bold text-white">Agente Ventas</div>
+                                    <div class="text-[10px] text-gray-400">Upselling & Menú</div>
+                                </div>
+                            </div>
+                            <div class="connection-dot bg-brand-gold -right-1.5"></div>
+                        </div>
+                    </div>
+
+                    <!-- Servicio / PQR -->
+                    <div class="absolute left-[580px] top-[260px] z-10">
+                        <div class="node-card rounded-xl p-3 flex items-center gap-3 relative min-w-[200px]">
+                            <div class="connection-dot bg-green-500 -left-1.5"></div>
+                            <div class="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center border border-white/10">
+                                <i class="fas fa-headset text-gray-300 text-lg"></i>
+                            </div>
+                            <div>
+                                <div class="text-xs font-bold text-white">Servicio al Cliente</div>
+                                <div class="text-[10px] text-gray-400">Escalamiento PQR</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4. Database/Dashboard Node -->
+                    <div class="absolute left-[860px] top-[150px] z-10">
+                        <div class="node-card rounded-xl p-3 flex items-center gap-3 relative min-w-[120px]">
+                            <div class="connection-dot bg-brand-gold -left-1.5"></div>
+                            <div class="w-8 h-8 rounded-lg bg-gray-800 flex items-center justify-center border border-gray-600">
+                                <i class="fas fa-database text-gray-300"></i>
+                            </div>
+                            <div>
+                                <div class="text-xs font-bold text-white">Dashboard</div>
+                                <div class="text-[10px] text-gray-500">Sync</div>
+                            </div>
+                        </div>
+                    </div>
+                    
                 </div>
             </div>
         </div>
